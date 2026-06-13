@@ -2,17 +2,6 @@
 
 Production-grade dual-system architecture for bank identity verification via HMAC-signed QR codes, JWT-authenticated consent, and real-time SignalR form auto-fill.
 
-## Documentation
-
-Full technical documentation with architecture diagrams, workflow, and code explanations:
-
-| Format | Path |
-|--------|------|
-| **PDF** | [`docs/SecureDigitalIdentityFill-Documentation.pdf`](docs/SecureDigitalIdentityFill-Documentation.pdf) |
-| HTML | [`docs/SecureDigitalIdentityFill-Documentation.html`](docs/SecureDigitalIdentityFill-Documentation.html) |
-| Markdown | [`docs/SecureDigitalIdentityFill-Documentation.md`](docs/SecureDigitalIdentityFill-Documentation.md) |
-
-Regenerate PDF: `.\docs\generate-pdf.ps1`
 
 ## Architecture
 
