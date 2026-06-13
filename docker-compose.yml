@@ -1,0 +1,112 @@
+name: securefill
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: securefill-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - securefill-net
+
+  banking-api:
+    build:
+      context: ./banking
+      dockerfile: Dockerfile
+    container_name: securefill-banking-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__BankingDb: Host=postgres;Port=5432;Database=banking_db;Username=postgres;Password=postgres
+      Security__HmacSecretKey: shared-hmac-secret-key-change-in-production
+      Cors__AllowedOrigins__0: http://localhost:3000
+      Cors__AllowedOrigins__1: http://127.0.0.1:3000
+    ports:
+      - "5001:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/swagger/index.html"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+    networks:
+      - securefill-net
+
+  identity-api:
+    build:
+      context: ./identity
+      dockerfile: Dockerfile
+    container_name: securefill-identity-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__IdentityDb: Host=postgres;Port=5432;Database=identity_db;Username=postgres;Password=postgres
+      Security__HmacSecretKey: shared-hmac-secret-key-change-in-production
+      Jwt__Key: super-secret-jwt-key-min-32-chars-long!!
+      Jwt__Issuer: NagarikIdentity
+      Jwt__Audience: NagarikApp
+      BankingApi__BaseUrl: http://banking-api:8080
+      Cors__AllowedOrigins__0: http://localhost:3001
+      Cors__AllowedOrigins__1: http://127.0.0.1:3001
+    ports:
+      - "5002:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      banking-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/swagger/index.html"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+    networks:
+      - securefill-net
+
+  banking-portal:
+    build:
+      context: ./banking/frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_NAGARIK_APP_URL: http://localhost:3001
+    container_name: securefill-banking-portal
+    ports:
+      - "3000:80"
+    depends_on:
+      banking-api:
+        condition: service_healthy
+    networks:
+      - securefill-net
+
+  nagarik-app:
+    build:
+      context: ./identity/frontend
+      dockerfile: Dockerfile
+    container_name: securefill-nagarik-app
+    ports:
+      - "3001:80"
+    depends_on:
+      identity-api:
+        condition: service_healthy
+    networks:
+      - securefill-net
+
+networks:
+  securefill-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

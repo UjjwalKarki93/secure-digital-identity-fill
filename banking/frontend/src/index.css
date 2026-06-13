@@ -1,0 +1,257 @@
+:root {
+  --orange: #F58220;
+  --orange-dark: #D96B0D;
+  --orange-light: #FFF4EB;
+  --navy: #003B71;
+  --navy-dark: #002A52;
+  --bg: #F4F6F9;
+  --surface: #ffffff;
+  --surface-2: #E8EDF3;
+  --text: #1A2B3C;
+  --muted: #5C6B7A;
+  --border: #DDE3EA;
+  --success: #0D7A4E;
+  --warning: #B45309;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+a {
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--orange);
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 59, 113, 0.06);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 130, 32, 0.25);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--orange-dark);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--navy);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--orange-light);
+  border-color: var(--orange);
+  box-shadow: none;
+}
+
+.btn-navy {
+  background: var(--navy);
+  color: #fff;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.35rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(245, 130, 32, 0.15);
+}
+
+.form-group input:read-only {
+  background: #F8FAFC;
+  color: var(--muted);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge-pending { background: #FEF3C7; color: var(--warning); }
+.badge-success { background: #D1FAE5; color: var(--success); }
+.badge-error { background: #FEE2E2; color: #B91C1C; }
+
+.qr-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 2.5rem;
+}
+
+.qr-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.qr-active-frame {
+  display: inline-block;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 2px solid var(--orange-light);
+}
+
+.qr-countdown strong {
+  color: var(--orange);
+}
+
+.qr-expired-panel {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #FEF2F2;
+  border-color: #FECACA;
+}
+
+.qr-expired-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.qr-expired-panel h3 {
+  color: #B91C1C;
+  margin-bottom: 0.5rem;
+}
+
+.qr-expired-panel p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+}
+
+.site-header {
+  background: #fff;
+  border-bottom: 3px solid var(--orange);
+  box-shadow: 0 2px 12px rgba(0, 59, 113, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+.site-nav a.active {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, var(--navy) 0%, #005099 55%, var(--navy-dark) 100%);
+  color: #fff;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+}
+
+.hero-banner .tagline {
+  color: var(--orange);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.site-footer strong {
+  color: var(--orange);
+}
