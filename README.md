@@ -29,11 +29,6 @@ Nagarik App (React :3001) ──► Identity API (:5002) ──► PostgreSQL (i
 docker compose up --build
 ```
 
-Or on Windows:
-
-```powershell
-.\start-dev.ps1
-```
 
 | Service | URL |
 |---------|-----|
